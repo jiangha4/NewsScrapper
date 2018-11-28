@@ -2,13 +2,16 @@
 
 from bs4 import BeautifulSoup
 import requests
-import urllib2
 
-html_doc = requests.get('http://www.bloomberg.com/quote/SPX:IND')
+quote_page = 'http://www.bloomberg.com/quote/SPX:IND'
 
+html_doc = requests.get(quote_page)
+
+#soup = BeautifulSoup(html_doc.text, 'html.parser')
 soup = BeautifulSoup(html_doc.text, 'html.parser')
 
-# Take out the <div> of name and get its value
-# name_box = soup.find('h1', attrs={'class': 'name'})
-# name = name_box.text.strip()
-# print name
+name = soup.find('h1')
+quote = soup.select('div[class=schema-org-financial-quote]')
+
+print(name)
+print(quote)
